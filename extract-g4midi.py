@@ -1,14 +1,6 @@
 import argparse
 import os
 
-# Device info
-# 1 page = (2k + 64)=2112 bytes
-# 1 block = 64 pages
-# 1 device = 1024 blocks = 65536 pages
-
-PAGESIZE = 2112
-BLOCKSIZE = PAGESIZE * 64
-
 # return uppercase hex string without 0x, leading zero to 2 digits
 def hexu(value):
     return str(hex(value))[2:].upper().zfill(2)
@@ -17,14 +9,6 @@ def hexu(value):
 def int32(blob, offset):
     value = (blob[offset] << 24) + (blob[offset+1] << 16) + (blob[offset+2] << 8) + (blob[offset+3])
     return value
-
-# write big endian 32 bit integer
-def writeint32(blob, value, offset):
-    blob[offset + 0] = (value & 0xFF000000) >> 24
-    blob[offset + 1] = (value & 0x00FF0000) >> 16
-    blob[offset + 2] = (value & 0x0000FF00) >> 8
-    blob[offset + 3] =  value & 0x000000FF
-    return True
 
 # swap bytes
 def swap(blob):    
